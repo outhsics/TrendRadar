@@ -1,0 +1,7 @@
+# Zeabur 配置文件
+# 这个文件会被 Zeabur 自动识别
+
+# 环境变量会从 Zeabur 控制台注入
+# 需要配置的环境变量：
+# TZ=Asia/Shanghai
+# PUSHPLUS_TOKEN=你的token (或其他推送配置)
