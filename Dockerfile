@@ -12,9 +12,14 @@ COPY . .
 # 设置时区
 ENV TZ=Asia/Shanghai
 ENV PYTHONUNBUFFERED=1
+ENV CRON_INTERVAL=7200
 
 # 创建数据目录
 RUN mkdir -p /app/output
 
-# TrendRadar 使用模块方式启动
-CMD ["python", "-m", "trendradar"]
+# 复制并设置启动脚本
+COPY docker-entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
+# 使用启动脚本，让服务持续运行
+CMD ["/usr/local/bin/docker-entrypoint.sh"]
