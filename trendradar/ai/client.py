@@ -66,13 +66,11 @@ class AIClient:
             "num_retries": kwargs.get("num_retries", self.num_retries),
         }
 
-        # 添加 API Key - 根据模型提供商使用正确的参数名
-        if self.api_key:
-            # Gemini 需要 gemini_api_key 参数
-            if self.model.startswith("gemini/"):
-                params["gemini_api_key"] = self.api_key
-            else:
-                params["api_key"] = self.api_key
+        # 添加 API Key
+        # LiteLLM 会自动从环境变量读取正确的 API Key
+        # Gemini 需要 GEMINI_API_KEY 环境变量
+        # 其他模型需要对应的 API_KEY 环境变量
+        # 这里不传递 api_key 参数，让 LiteLLM 自己从环境变量读取
 
         # 添加 API Base（如果配置了）
         if self.api_base:
