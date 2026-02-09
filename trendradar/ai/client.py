@@ -66,9 +66,13 @@ class AIClient:
             "num_retries": kwargs.get("num_retries", self.num_retries),
         }
 
-        # 添加 API Key
+        # 添加 API Key - 根据模型提供商使用正确的参数名
         if self.api_key:
-            params["api_key"] = self.api_key
+            # Gemini 需要 gemini_api_key 参数
+            if self.model.startswith("gemini/"):
+                params["gemini_api_key"] = self.api_key
+            else:
+                params["api_key"] = self.api_key
 
         # 添加 API Base（如果配置了）
         if self.api_base:
