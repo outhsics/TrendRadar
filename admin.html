@@ -304,14 +304,7 @@
     </div>
 
     <script>
-        // 配置 - 自动检测 API 基础路径
-        const getApiBase = () => {
-            const hostname = window.location.hostname;
-            const port = window.location.port;
-            // 管理后台在 9000 端口，直接使用相对路径
-            return port === '9000' ? '' : '/api';
-        };
-        const API_BASE = getApiBase();
+        // 配置
         const AUTH_KEY = 'trendradar_admin_token';
 
         // 登录处理
@@ -321,7 +314,7 @@
             const password = document.getElementById('password').value;
 
             try {
-                const response = await fetch(`${API_BASE}/login`, {
+                const response = await fetch('/api/login', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ username, password })
@@ -366,7 +359,7 @@
         // 加载状态
         async function loadStatus() {
             try {
-                const response = await fetch(`${API_BASE}/status`, {
+                const response = await fetch('/api/status', {
                     headers: { 'Authorization': `Bearer ${localStorage.getItem(AUTH_KEY)}` }
                 });
                 const data = await response.json();
@@ -422,7 +415,8 @@
                     headers: { 'Authorization': `Bearer ${localStorage.getItem(AUTH_KEY)}` }
                 };
 
-                const response = await fetch(`${API_BASE}${path}`, options);
+                // path 已经包含完整路径（如 /api/status），直接使用
+                const response = await fetch(path, options);
                 const data = await response.json();
 
                 responseEl.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
