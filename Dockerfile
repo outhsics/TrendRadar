@@ -57,16 +57,30 @@ COPY docker/manage.py .
 COPY trendradar/ ./trendradar/
 COPY config/ ./config/
 
+# 复制管理后台文件
+COPY admin.html .
+COPY admin_server.py .
+COPY start-all.sh .
+
 # 复制 entrypoint.sh 并强制转换为 LF 格式
 COPY docker/entrypoint.sh /entrypoint.sh.tmp
 RUN sed -i 's/\r$//' /entrypoint.sh.tmp && \
     mv /entrypoint.sh.tmp /entrypoint.sh && \
     chmod +x /entrypoint.sh && \
     chmod +x manage.py && \
+    chmod +x admin_server.py && \
+    chmod +x start-all.sh && \
     mkdir -p /app/config /app/output
+
+# 暴露端口
+# 8080: Web 服务器（报告文件）
+# 9000: 管理后台 API
+EXPOSE 8080 9000
 
 ENV PYTHONUNBUFFERED=1 \
     CONFIG_PATH=/app/config/config.yaml \
-    FREQUENCY_WORDS_PATH=/app/config/frequency_words.txt
+    FREQUENCY_WORDS_PATH=/app/config/frequency_words.txt \
+    ADMIN_PORT=9000
 
-ENTRYPOINT ["/entrypoint.sh"]
+# 使用新的启动脚本
+CMD ["/app/start-all.sh"]
