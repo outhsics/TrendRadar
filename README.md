@@ -43,6 +43,16 @@
 
 </div>
 
+## Recruiter Snapshot
+
+- Status: `active`
+- Positioning: AI-powered trend monitoring and signal intelligence platform
+- Core Value: aggregate multi-source signals and deliver actionable summaries through notification channels
+- Product Surface: RSS aggregation, MCP integration, AI analysis push, multi-channel delivery
+- Stack: Python, web dashboard, automation scripts, Docker deployment support
+- Delivery Signal: production-oriented configuration and operations workflow
+- Last Reviewed: `2026-03-02`
+
 > 本项目以轻量，易部署为目标
 
 <br>
